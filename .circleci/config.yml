@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: dbohdan1/circleci-tcl-gcc-autoconf:latest
+    steps:
+      - checkout
+      - run: ./show-package-versions.tcl
+      - run: ./build-sample-extension.tcl
