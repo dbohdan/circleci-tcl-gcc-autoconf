@@ -9,7 +9,7 @@ RUN apk add \
         gzip \
         tar
 
-# Packages for Tcl and C development.
+# Packages for C development.
 RUN apk add \
         autoconf \
         automake \
@@ -19,12 +19,20 @@ RUN apk add \
         gcc \
         libc-dev \
         make \
-        tcl \
-        tcl-dev \
-        tcl-tls
+        openssl-dev
 
 WORKDIR /root
 ENV USER root
+
+# Tcl.
+RUN wget -O tcl-core-8-6-9.tar.gz \
+         https://github.com/tcltk/tcl/archive/core-8-6-9.tar.gz \
+    && tar xf tcl-core-8-6-9.tar.gz \
+    && cd tcl-core-8-6-9/unix/ \
+    && ./configure --prefix=/usr \
+    && make install \
+    && cd ..
+RUN ln -s /usr/bin/tclsh8.6 /usr/bin/tclsh
 
 # Tcllib.
 RUN wget -O tcllib-1-19.tar.gz \
@@ -49,10 +57,23 @@ RUN cd tcllib-tcllib-1-19/ \
     && cp -r modules/tcllibc /usr/lib/tcllib1.19/ \
     && cd ..
 
+# TclTLS.
+RUN wget -O tcltls-1.7.16.tar.gz \
+         https://core.tcl.tk/tcltls/uv/tcltls-1.7.16.tar.gz \
+    && tar xf tcltls-1.7.16.tar.gz \
+    && cd tcltls-1.7.16/ \
+    && ./configure --prefix=/usr \
+    && make install \
+    && cd ..
+
 # Remove sources.
 RUN rm -rf critcl-3.1.17.tar.gz \
            critcl-3.1.17/ \
+           tcl-core-8-6-9.tar.gz \
+           tcl-core-8-6-9/ \
            tcllib-1-19.tar.gz \
-           tcllib-tcllib-1-19/
+           tcllib-tcllib-1-19/ \
+           tcltls-1.7.16.tar.gz \
+           tcltls-1.7.16/
 
 CMD tclsh
