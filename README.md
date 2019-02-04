@@ -8,9 +8,10 @@ and TclTLS.  It also comes with GCC, GNU make, and GNU Autoconf for building
 and testing your binary extensions.  It is suitable for testing C code
 unrelated to Tcl.  It has no SSH server.
 
-See [`.circleci/images/Dockerfile`](.circleci/images/Dockerfile) for the
-complete package list, the `test` job in
-[`.circleci/config.yml`](.circleci/config.yml) for a use example.
+You will find the complete package list in
+[`.circleci/images/Dockerfile`](.circleci/images/Dockerfile).  For a use
+example see
+[`.circleci/config.yml` for tcl-duktape](https://github.com/dbohdan/tcl-duktape/blob/master/.circleci/config.yml).
 
 ## License
 
