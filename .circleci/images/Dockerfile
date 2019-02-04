@@ -57,6 +57,16 @@ RUN cd tcllib-tcllib-1-19/ \
     && cp -r modules/tcllibc /usr/lib/tcllib1.19/ \
     && cd ..
 
+# tclsqlite3.
+RUN wget -O sqlite-autoconf-3260000.tar.gz \
+         https://sqlite.org/2018/sqlite-autoconf-3260000.tar.gz \
+    && tar xf sqlite-autoconf-3260000.tar.gz \
+    && cd sqlite-autoconf-3260000/tea/ \
+    && env CFLAGS='-DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_JSON1' \
+       ./configure --prefix=/usr \
+    && make install \
+    && cd ../..
+
 # TclTLS.
 RUN wget -O tcltls-1.7.16.tar.gz \
          https://core.tcl.tk/tcltls/uv/tcltls-1.7.16.tar.gz \
@@ -74,6 +84,8 @@ RUN rm -rf critcl-3.1.17.tar.gz \
            tcllib-1-19.tar.gz \
            tcllib-tcllib-1-19/ \
            tcltls-1.7.16.tar.gz \
-           tcltls-1.7.16/
+           tcltls-1.7.16/ \
+           sqlite-autoconf-3260000.tar.gz \
+           sqlite-autoconf-3260000/
 
 CMD tclsh
