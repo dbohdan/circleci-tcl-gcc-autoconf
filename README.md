@@ -1,6 +1,6 @@
 # Tcl 8.6, Tcllib, and GCC on Alpine Linux for CircleCI
 
-[![CircleCI build status](https://circleci.com/gh/dbohdan/circleci-tcl-gcc-autoconf.svg?style=svg)](https://circleci.com/gh/dbohdan/circleci-tcl-gcc-autoconf)
+[![CircleCI build status](https://circleci.com/gh/dbohdan/circleci-tcl-gcc-autoconf.svg?style=shield)](https://circleci.com/gh/dbohdan/circleci-tcl-gcc-autoconf)
 [![Docker Hub pull count](https://img.shields.io/docker/pulls/dbohdan1/circleci-tcl-gcc-autoconf.svg?style=flat)](https://hub.docker.com/r/dbohdan1/circleci-tcl-gcc-autoconf)
 
 The Docker image built from this repository includes Tcl 8.6, Critcl, Tcllib
