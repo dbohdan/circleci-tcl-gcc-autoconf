@@ -1,15 +1,44 @@
 #! /usr/bin/env tclsh
-foreach package {
-    Tcl
 
-    critcl
+proc pkg package {
+    upvar 1 prefix prefix
 
-    fileutil::magic::filetype
-    struct::list
-    tcllibc
-    try
-
-    tls
-} {
-    puts [list $package [package require $package]]
+    puts $prefix[list $package [package require $package]]
 }
+
+proc group {name script} {
+    upvar 1 prefix prefix
+
+    puts "$prefix$name \{"
+
+    set prevPrefix $prefix
+    set prefix "    $prefix"
+    try {
+        uplevel 1 $script
+    } finally {
+        set prefix $prevPrefix
+    }
+
+    puts $prefix\}
+}
+
+proc main {} {
+    set prefix {}
+
+    pkg Tcl
+    pkg critcl
+    pkg tdom
+    group Tcllib {
+        pkg fileutil::magic::filetype
+        group struct {
+            pkg struct::list
+            pkg struct::tree
+        }
+        pkg tcllibc
+        pkg try
+    }
+    pkg tls
+    pkg sqlite3    
+}
+
+main
