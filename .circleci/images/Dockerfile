@@ -57,6 +57,18 @@ RUN cd tcllib-tcllib-1-19/ \
     && cp -r modules/tcllibc /usr/lib/tcllib1.19/ \
     && cd ..
 
+# tDOM.
+RUN wget -O tdom-0.9.1-src.tgz \
+         http://tdom.org/downloads/tdom-0.9.1-src.tgz \
+    && echo '3b1f644cf07533fe4afaa8cb709cb00a899d9e9ebfa66f4674aa2dcfb398242c  tdom-0.9.1-src.tgz' > sha256sum \
+    && sha256sum -c sha256sum \
+    && rm sha256sum \
+    && tar xf tdom-0.9.1-src.tgz \
+    && cd tdom-0.9.1/ \
+    && ./configure --prefix=/usr \
+    && make install \
+    && cd ..
+
 # tclsqlite3.
 RUN wget -O sqlite-autoconf-3260000.tar.gz \
          https://sqlite.org/2018/sqlite-autoconf-3260000.tar.gz \
@@ -85,6 +97,8 @@ RUN rm -rf critcl-3.1.17.tar.gz \
            tcllib-tcllib-1-19/ \
            tcltls-1.7.16.tar.gz \
            tcltls-1.7.16/ \
+           tdom-0.9.1-src.tgz \
+           tdom-0.9.1/ \
            sqlite-autoconf-3260000.tar.gz \
            sqlite-autoconf-3260000/
 
