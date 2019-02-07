@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          echo 'export "TAG=0.3.0.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}"' >> $BASH_ENV
+          echo 'export "TAG=0.4.0.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}"' >> $BASH_ENV
           echo 'export NAME=dbohdan1/circleci-tcl-gcc-autoconf' >> $BASH_ENV
       - setup_remote_docker:
           docker_layer_caching: true
@@ -22,7 +22,7 @@ jobs:
             docker push "$NAME:$TAG"
   test:
     docker:
-      - image: dbohdan1/circleci-tcl-gcc-autoconf:0.3.0.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}
+      - image: dbohdan1/circleci-tcl-gcc-autoconf:0.4.0.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}
     steps:
       - checkout
       - run: ./show-package-versions.tcl
