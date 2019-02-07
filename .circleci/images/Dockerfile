@@ -9,7 +9,7 @@ RUN apk add \
         gzip \
         tar
 
-# Packages for C development.
+# Packages for C and C++ development.
 RUN apk add \
         autoconf \
         automake \
@@ -17,7 +17,9 @@ RUN apk add \
         curl \
         fossil \
         gcc \
+        g++ \
         libc-dev \
+        libtool \
         make \
         openssl-dev
 
@@ -58,14 +60,23 @@ RUN cd tcllib-tcllib-1-19/ \
     && cd ..
 
 # tDOM.
-RUN wget -O tdom-0.9.1-src.tgz \
+RUN wget -O gumbo-parser-0.10.1.tar.gz \
+         https://github.com/google/gumbo-parser/archive/v0.10.1.tar.gz \
+    && tar xf gumbo-parser-0.10.1.tar.gz \
+    && cd gumbo-parser-0.10.1 \
+    && ./autogen.sh \
+    && ./configure \
+    && make install \
+    && cd ..
+
+RUN wget -O tdom-0.9.1-src.tar.gz \
          http://tdom.org/downloads/tdom-0.9.1-src.tgz \
-    && echo '3b1f644cf07533fe4afaa8cb709cb00a899d9e9ebfa66f4674aa2dcfb398242c  tdom-0.9.1-src.tgz' > sha256sum \
+    && echo '3b1f644cf07533fe4afaa8cb709cb00a899d9e9ebfa66f4674aa2dcfb398242c  tdom-0.9.1-src.tar.gz' > sha256sum \
     && sha256sum -c sha256sum \
     && rm sha256sum \
-    && tar xf tdom-0.9.1-src.tgz \
+    && tar xf tdom-0.9.1-src.tar.gz \
     && cd tdom-0.9.1/ \
-    && ./configure --prefix=/usr \
+    && ./configure --enable-html5 --prefix=/usr \
     && make install \
     && cd ..
 
@@ -91,13 +102,15 @@ RUN wget -O tcltls-1.7.16.tar.gz \
 # Remove sources.
 RUN rm -rf critcl-3.1.17.tar.gz \
            critcl-3.1.17/ \
+           gumbo-parser-0.10.1.tar.gz \
+           gumbo-parser-0.10.1/ \
            tcl-core-8-6-9.tar.gz \
            tcl-core-8-6-9/ \
            tcllib-1-19.tar.gz \
            tcllib-tcllib-1-19/ \
            tcltls-1.7.16.tar.gz \
            tcltls-1.7.16/ \
-           tdom-0.9.1-src.tgz \
+           tdom-0.9.1-src.tar.gz \
            tdom-0.9.1/ \
            sqlite-autoconf-3260000.tar.gz \
            sqlite-autoconf-3260000/
